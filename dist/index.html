@@ -7,31 +7,62 @@
     <script defer src="bundle.js"></script>
   </head>
   <body>
-    <div id="todas-content">
-      <header class="header">
-        <h1>LOGO</h1>
-      </header>
-      <div class="sidebar">
-        <div class="inbox">
-          <h2>Inbox</h2>
-          <ul class="list">
-            <li>test1</li>
-          </ul>
+    <div id="todas-app">
+      <div class="todas-wrap">
+        <header class="header">
+          <h1>LOGO</h1>
+        </header>
+        <div class="sidebar">
+          <div class="inbox">
+            <button><h2>Inbox</h2></button>
+            <ul class="list"></ul>
+          </div>
+          <div class="today">
+            <button><h2>Today</h2></button>
+
+            <ul class="list"></ul>
+          </div>
+          <div class="projects">
+            <button><h2>Projects</h2></button>
+
+            <ul class="list"></ul>
+          </div>
         </div>
-        <div class="today">
-          <h2>Today</h2>
-          <ul class="list">
-            <li>test1</li>
-          </ul>
-        </div>
-        <div class="projects">
-          <h2>Projects</h2>
-          <ul class="list">
-            <li>test1</li>
-          </ul>
+        <div class="content">
+          <div class="task-form">
+            <label for="title">
+              Title
+              <input id="title" type="text" value="Clean" />
+            </label>
+
+            <label for="desc">
+              Description
+              <input
+                id="desc"
+                type="text"
+                value="This is my description people"
+              />
+            </label>
+
+            <label for="duedate">
+              Date
+              <input id="duedate" type="date" value="2022-07-15" />
+            </label>
+
+            <label for="priority">
+              Priority
+              <input id="priority" min="1" max="3" type="range" value="2" />
+            </label>
+
+            <label for="project">
+              Project
+              <input id="project" type="text" value="test" />
+            </label>
+
+            <input id="formSubmit" type="button" value="submit" />
+          </div>
         </div>
       </div>
-      <div class="content"></div>
     </div>
   </body>
 </html>

@@ -1,43 +1,40 @@
-import './style.css';
+'use strict';
+
+import './style.scss';
+let Task = require('./task.js');
+
+// Sidebar Elements
+const sbInbox = document.querySelector('.inbox');
+const sbToday = document.querySelector('.today');
+const sbProjects = document.querySelector('.project');
+
+// Form Elements
+const formTitle = document.querySelector('#title');
+const formDesc = document.querySelector('#desc');
+const formDate = document.querySelector('#duedate');
+const formPriority = document.querySelector('#priority');
+const formProject = document.querySelector('#project');
+const formSubmit = document.querySelector('#formSubmit');
 
 
-class Task {
-    constructor(title, desc, dueDate, priority, notes) {
-        this.title = title;
-        this.desc = desc;
-        this.dueDate = dueDate;
-        this.priority = priority;
+
+const listProject = (function () {
+    const list = [];
+
+    const addTask = (t) => {
+        let index = null;
+        // for (const proj of list) {
+        //     if (proj.project)
+        list.push(t);
+        // }
+        // const [t.project]
+        // list.push(t);
+        console.log(list[0].project);
     }
 
-    print() {
-        console.log(`Title: ${this.title}`);
-        console.log(`Description: ${this.desc}`);
-        console.log(`Due: ${this.dueDate}`);
-        console.log(`Priority: ${this.priority}`);
-    }
-}
+    return { addTask };
+})();
 
-const test = new Task('Clean', 'This is my description people', '12/07/22', 'High', 'notes incase you need it');
-test.print();
-
-// var getTaskForm = (function () {
-//     'use strict';
-
-//     var _listProjects = 'Hello World';
-//     // var publicProperty = 'I am a public property';
-
-//     function _privateMethod() {
-//         console.log(_privateProperty);
-//     }
-
-//     function publicMethod() {
-//         _privateMethod();
-//     }
-
-//     return {
-//         publicMethod: publicMethod,
-//         publicProperty: publicProperty
-//     };
-// })();
-
-// document.body.appendChild(component());
+formSubmit.addEventListener('click', (e) => {
+    listProject.addTask(new Task(formTitle.value, formDesc.value, formDate.value, formPriority.value, formProject.value))
+})
