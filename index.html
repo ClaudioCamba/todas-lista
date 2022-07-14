@@ -12,6 +12,7 @@
         <header class="header">
           <h1>LOGO</h1>
         </header>
+        <!-- Sidebar Content -->
         <div class="sidebar">
           <div class="inbox">
             <button><h2>Inbox</h2></button>
@@ -19,16 +20,22 @@
           </div>
           <div class="today">
             <button><h2>Today</h2></button>
-
             <ul class="list"></ul>
           </div>
           <div class="projects">
-            <button><h2>Projects</h2></button>
-
+            <h2>Projects <button class="add">+ Project</button></h2>
             <ul class="list"></ul>
           </div>
         </div>
+        <!-- Modal Content -->
+        <!-- Project Form -->
         <div class="content">
+          <div class="project-form">
+            <input type="text" class="project" />
+            <input type="button" class="add" value="Add" />
+            <input type="button" class="cancel" value="Cancel" />
+          </div>
+          <!-- Task Form -->
           <div class="task-form">
             <label for="title">
               Title
