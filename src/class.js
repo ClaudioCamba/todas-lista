@@ -24,12 +24,14 @@ class Project {
         this.name = name;
         this.tasks = [];
         this.object = this;
+        this.elemLi = this.liDOM();
+        this.elemOp = this.optionDOM();
     }
 
     addToTasks(p) { this.tasks.push(p) }; // Add new projects
 
     // Sidebar li element
-    sidebarLi() {
+    liDOM() {
         const li = document.createElement('li');
         const projBtn = document.createElement('button');
         const closeBtn = document.createElement('button');
@@ -39,10 +41,16 @@ class Project {
         closeBtn.addEventListener('click', (e) => {
             allProjects.removeProj(this.object); // Remove project from list variable (index.js => allProjects)
             e.target.parentElement.remove(); // Remove DOM element
-            allProjects.updateSidebar();
+            allProjects.updateApp()
         });
-
         return li;
+    }
+
+    optionDOM() {
+        const option = document.createElement('option');
+        option.value = this.name;
+        option.innerText = this.name;
+        return option;
     }
 }
 

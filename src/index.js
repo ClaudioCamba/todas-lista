@@ -3,6 +3,7 @@ import './style.scss';
 import { projList, projAddBtn, projCancelBtn, projInput, formTitle, formDesc, formDate, formPriority, formProject, formSubmit } from './variables.js';
 import { Task, Project } from './class.js';
 
+// Main control
 const allProjects = (function () {
     const list = [];
 
@@ -11,14 +12,16 @@ const allProjects = (function () {
     const removeProj = (e) => { list.splice(list.indexOf(e), 1); }; // Remove project from array
 
     // Update sidebar
-    const updateSidebar = () => {
+    const updateApp = () => {
         projList.innerHTML = '';
+        formProject.innerHTML = '<option value="inbox">inbox</option>';
         list.forEach(proj => {
-            projList.prepend(proj.sidebarLi());
+            projList.prepend(proj.elemLi);
+            formProject.appendChild(proj.elemOp);
         })
     };
 
-    return { addNewProj, checkList, updateSidebar, removeProj, list };
+    return { addNewProj, checkList, updateApp, removeProj, list };
 })();
 
 
@@ -26,15 +29,14 @@ projAddBtn.addEventListener('click', () => {
     if (projInput.value !== '') {
         if (allProjects.checkList(projInput.value)) {
             allProjects.addNewProj(projInput.value);
-            allProjects.updateSidebar();
+            allProjects.updateApp();
+            console.log(allProjects.list);
         } else {
             console.log('Write Function to handle => Already Exists');
         }
     } else {
         console.log('Write Function to handle => Empty Project Input');
     }
-
-    console.log(allProjects.list);
 });
 
 export { allProjects }
