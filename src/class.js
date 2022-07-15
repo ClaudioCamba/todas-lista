@@ -1,4 +1,5 @@
 import { allProjects } from './index.js';
+import { mainContent } from './variables.js';
 
 class Task {
     constructor(title, desc, dueDate, priority, project) {
@@ -10,12 +11,22 @@ class Task {
         this.object = this;
     }
 
-    Print() {
-        console.log(`Title: ${this.title}`);
-        console.log(`Description: ${this.desc}`);
-        console.log(`Due: ${this.dueDate}`);
-        console.log(`Priority: ${this.priority}`);
-        console.log(`Project: ${this.project}`);
+    buildElem() {
+        const li = document.createElement('li');
+        const title = document.createElement('h4');
+        const desc = document.createElement('p');
+        const date = document.createElement('p');
+        const priv = document.createElement('p');
+        const proj = document.createElement('p');
+
+        title.innerText = this.title;
+        desc.innerText = this.desc;
+        date.innerText = this.dueDate;
+        priv.innerText = this.priority;
+        proj.innerText = this.project;
+
+        li.append(title, desc, date, priv, proj);
+        return li;
     }
 };
 
@@ -24,8 +35,6 @@ class Project {
         this.name = name;
         this.tasks = [];
         this.object = this;
-        this.elemLi = this.liDOM();
-        this.elemOp = this.optionDOM();
     }
 
     addToTasks(p) { this.tasks.push(p) }; // Add new projects
@@ -38,10 +47,15 @@ class Project {
         projBtn.innerText = this.name;
         closeBtn.innerText = 'X';
         li.append(projBtn, closeBtn);
+        // Remove project 
         closeBtn.addEventListener('click', (e) => {
             allProjects.removeProj(this.object); // Remove project from list variable (index.js => allProjects)
             e.target.parentElement.remove(); // Remove DOM element
             allProjects.updateApp()
+        });
+
+        projBtn.addEventListener('click', (e) => {
+            allProjects.showMainContent(this.tasksElem());
         });
         return li;
     }
@@ -56,6 +70,22 @@ class Project {
         })
         return option;
     }
+
+    // Show project tasks
+    tasksElem() {
+        if (this.tasks.length > 0) {
+            const ul = document.createElement('ul');
+            ul.classList.add('task-wrap');
+            this.tasks.forEach(task => {
+                ul.appendChild(task.buildElem());
+            });
+            return ul;
+        } else {
+            return '';
+        }
+
+    }
+
 }
 
 export { Task, Project };

@@ -11,8 +11,11 @@ const formProject = document.querySelector('#project');
 const formSubmit = document.querySelector('#formSubmit');
 // Sidebar Elements
 const projList = document.querySelector('.projects ul');
+// Main content
+const mainContent = document.querySelector('.main-content');
 
 export {
+    mainContent,
     projList,
     projAddBtn,
     projCancelBtn,

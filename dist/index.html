@@ -14,61 +14,64 @@
         </header>
         <!-- Sidebar Content -->
         <div class="sidebar">
-          <div class="inbox">
-            <button><h2>Inbox</h2></button>
-            <ul class="list"></ul>
-          </div>
-          <div class="today">
-            <button><h2>Today</h2></button>
-            <ul class="list"></ul>
-          </div>
+          <button class="inbox">Inbox</button>
+          <button class="today">Today</button>
           <div class="projects">
-            <h2>Projects <button class="add">+</button></h2>
+            <h2>Projects</h2>
+            <button class="btn-proj">+Project</button>
+            <button class="btn-task">+Task</button>
             <ul class="list"></ul>
           </div>
         </div>
+
+        <div id="content">
+          <div class="main-content"></div>
+        </div>
         <!-- Modal Content -->
-        <!-- Project Form -->
-        <div class="content">
-          <div class="project-form">
-            <input type="text" class="project" />
-            <input type="button" class="add" value="Add" />
-            <input type="button" class="cancel" value="Cancel" />
-          </div>
-          <!-- Task Form -->
-          <div class="task-form">
-            <label for="title">
-              Title
-              <input id="title" type="text" value="Clean" />
-            </label>
+        <div id="myModal" class="modal">
+          <div class="modal-content">
+            <span class="close">&times;</span>
+            <!-- Project Form -->
+            <div class="project-form">
+              <input type="text" class="project" value="Test" />
+              <input type="button" class="add" value="Add" />
+              <input type="button" class="cancel" value="Cancel" />
+            </div>
+            <!-- Task Form -->
+            <div class="task-form">
+              <label for="title">
+                Title
+                <input id="title" type="text" value="Clean" />
+              </label>
 
-            <label for="desc">
-              Description
-              <input
-                id="desc"
-                type="text"
-                value="This is my description people"
-              />
-            </label>
+              <label for="desc">
+                Description
+                <input
+                  id="desc"
+                  type="text"
+                  value="This is my description people"
+                />
+              </label>
 
-            <label for="duedate">
-              Date
-              <input id="duedate" type="date" value="2022-07-15" />
-            </label>
+              <label for="duedate">
+                Date
+                <input id="duedate" type="date" value="2022-07-15" />
+              </label>
 
-            <label for="priority">
-              Priority
-              <input id="priority" min="1" max="3" type="range" value="2" />
-            </label>
+              <label for="priority">
+                Priority
+                <input id="priority" min="1" max="3" type="range" value="2" />
+              </label>
 
-            <label for="project">
-              Project
-              <select name="Projects" id="project">
-                <option value="inbox">Inbox</option>
-              </select>
-            </label>
+              <label for="project">
+                Project
+                <select name="Projects" id="project">
+                  <option value="inbox">Inbox</option>
+                </select>
+              </label>
 
-            <input id="formSubmit" type="button" value="add" />
+              <input id="formSubmit" type="button" value="add" />
+            </div>
           </div>
         </div>
       </div>

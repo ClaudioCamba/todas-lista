@@ -1,6 +1,6 @@
 'use strict';
 import './style.scss';
-import { projList, projAddBtn, projCancelBtn, projInput, formTitle, formDesc, formDate, formPriority, formProject, formSubmit } from './variables.js';
+import { mainContent, projList, projAddBtn, projCancelBtn, projInput, formTitle, formDesc, formDate, formPriority, formProject, formSubmit } from './variables.js';
 import { Task, Project } from './class.js';
 
 // Main control
@@ -16,8 +16,8 @@ const allProjects = (function () {
         projList.innerHTML = '';
         formProject.innerHTML = '<option value="inbox">inbox</option>';
         list.forEach(proj => {
-            projList.appendChild(proj.elemLi); // Update sidebar
-            formProject.appendChild(proj.elemOp); // Update task form (project selection)
+            projList.appendChild(proj.liDOM()); // Update sidebar
+            formProject.appendChild(proj.optionDOM()); // Update task form (project selection)
         })
     };
 
@@ -52,56 +52,67 @@ const allProjects = (function () {
             console.log('Write Function to handle => Empty Task Input');
         }
         updateApp();
-        console.log(list);
     }
 
-    return { addNewProj, updateApp, addNewTask, removeProj, list };
+    // Main content showcase
+    const showMainContent = (e) => {
+        console.log(mainContent);
+        console.log(e);
+        mainContent.innerHTML = '';
+        mainContent.appendChild(e);
+    }
+
+    return { addNewProj, updateApp, addNewTask, removeProj, showMainContent, list };
 })();
 
 
 projAddBtn.addEventListener('click', () => {
     allProjects.addNewProj(projInput.value);
+    modalControl.closeModal();
 });
 
 formSubmit.addEventListener('click', () => {
-    allProjects.addNewTask(new Task(formTitle.value, formDesc.value, formDate.value, formPriority.value, formProject.value))
+    allProjects.addNewTask(new Task(formTitle.value, formDesc.value, formDate.value, formPriority.value, formProject.value));
+    modalControl.closeModal();
 })
 
 
-// const listProject = (function () {
-//     const list = [];
+const modalControl = (() => {
+    // Get the modal
+    var modal = document.getElementById("myModal");
+    // Get the button that opens the modal
+    const btn1 = document.querySelector('.btn-proj');
+    const btn2 = document.querySelector('.btn-task');
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+    // When the user clicks the button, open the modal 
+    btn1.onclick = function (e) {
+        modal.classList.add('project-show');
+        modal.style.display = "block";
+    }
+    btn2.onclick = function (e) {
+        modal.classList.add('task-show');
+        modal.style.display = "block";
+    }
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function () {
 
-//     class Project {
-//         constructor(name, task) {
-//             this.name = name;
-//             this.allTasks = [task];
-//         }
+        closeModal()
+    }
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function (event) {
+        if (event.target == modal) {
+            closeModal();
+        }
+    }
 
-//         addToTasks(p) {
-//             this.allTasks.push(p);
-//         }
-//     }
-
-//     const addTask = (t) => {
-//         let projIndex = null;
-//         const projCheck = (() => {
-//             for (let i = 0; i < list.length; i++) {
-//                 if (t.project === list[i].name) { projIndex = i; }
-//             }
-//         })();
-
-//         if (projIndex === null) { // Add new project to list if does not exist
-//             list.push(new Project(t.project, t))
-//         } else { // Add to pre-existing project
-//             list[projIndex].addToTasks(t)
-//         }
-
-//         console.log(list)
-
-//     }
-
-//     return { addTask };
-// })();
+    const closeModal = () => {
+        modal.classList.remove('project-show');
+        modal.classList.remove('task-show');
+        modal.style.display = "none";
+    }
+    return { closeModal }
+})();
 
 
 
