@@ -46,10 +46,14 @@ class Project {
         return li;
     }
 
+    // Task form option element
     optionDOM() {
         const option = document.createElement('option');
         option.value = this.name;
         option.innerText = this.name;
+        option.addEventListener('click', (e) => {
+            console.log(this.object);
+        })
         return option;
     }
 }
