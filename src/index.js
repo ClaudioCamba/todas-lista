@@ -56,8 +56,7 @@ const allProjects = (function () {
 
     // Main content showcase
     const showMainContent = (e) => {
-        console.log(mainContent);
-        console.log(e);
+        console.log(list);
         mainContent.innerHTML = '';
         mainContent.appendChild(e);
     }
@@ -106,12 +105,17 @@ const modalControl = (() => {
         }
     }
 
+    const openModal = (e) => {
+        modal.classList.add('task-show');
+        modal.style.display = "block";
+    }
+
     const closeModal = () => {
         modal.classList.remove('project-show');
         modal.classList.remove('task-show');
         modal.style.display = "none";
     }
-    return { closeModal }
+    return { closeModal, openModal }
 })();
 
 
