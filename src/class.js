@@ -1,4 +1,4 @@
-import { allProjects, modalControl } from './index.js';
+import { allProjects } from './index.js';
 // import { mainContent } from './variables.js';
 
 class Task {
@@ -62,7 +62,6 @@ class Project {
             } else {
                 console.log('Write Function to handle => No task ');
             }
-
         });
         return li;
     }
@@ -74,25 +73,53 @@ class Project {
         return this.option;
     }
 
+    // Edit project title
+    editTitle() {
+        const div = document.createElement('div');
+        const editBtn = document.createElement('button');
+        const closeEdit = document.createElement('button');
+        const editInput = document.createElement('input');
+        // Attributes
+        editInput.type = 'text';
+        editBtn.innerText = 'edit';
+        closeEdit.innerText = 'X';
+        closeEdit.classList.add('edit-proj-close');
+        editInput.classList.add('edit-proj-input');
+        // Append
+        div.append(editInput, closeEdit, editBtn);
+        // Click events
+        editBtn.addEventListener('click', (e) => {
+            if (div.classList.contains('active')) {
+                if (allProjects.checkProjList(editInput.value)) {
+                    this.name = editInput.value;
+                    this.projHeader.innerText = this.name;
+                    this.projBtn.innerText = this.name;
+                    this.option.innerText = this.name;
+                    editBtn.innerText = 'edit';
+                    div.classList.remove('active');
+                } else {
+                    console.log('Write Function to handle => Project Already Exists');
+                }
+            } else {
+                editBtn.innerText = 'update';
+                div.classList.add('active');
+            }
+
+        });
+        closeEdit.addEventListener('click', (e) => {
+            div.classList.remove('active');
+        });
+
+        return div;
+    }
+
     // Show project tasks
     tasksElem() {
         const mainDiv = document.createElement('div');
         const ul = document.createElement('ul');
-        const editBtn = document.createElement('button');
-        const saveEdit = document.createElement('button');
-        const editInput = document.createElement('input');
         this.projHeader.innerText = this.name;
-        editBtn.innerText = 'edit';
-        saveEdit.innerText = 'update';
-        mainDiv.append(this.projHeader, editBtn, ul);
 
-        editBtn.addEventListener('click', (e) => {
-            this.name = 'What';
-            this.projHeader.innerText = this.name;
-            this.projBtn.innerText = this.name;
-            this.option.innerText = this.name;
-
-        });
+        mainDiv.append(this.projHeader, this.editTitle(), ul);
 
         ul.classList.add('task-wrap');
         this.tasks.forEach(task => {

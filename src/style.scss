@@ -154,6 +154,19 @@ body {
   background-color: lightblue;
 }
 
+// Main content
+.edit-proj-close,
+.edit-proj-input {
+  display: none;
+}
+
+.active .edit-proj-close,
+.active .edit-proj-input {
+  display: inline-block;
+}
+
+
+
 /* The Modal (background) */
 .modal {
   display: none; /* Hidden by default */

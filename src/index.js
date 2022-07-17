@@ -61,7 +61,7 @@ const allProjects = (function () {
         mainContent.appendChild(e);
     }
 
-    return { addNewProj, updateApp, addNewTask, removeProj, showMainContent, list };
+    return { addNewProj, updateApp, addNewTask, removeProj, showMainContent, checkProjList, list };
 })();
 
 
