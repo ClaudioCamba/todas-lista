@@ -80,6 +80,7 @@ class Project {
         const closeEdit = document.createElement('button');
         const editInput = document.createElement('input');
         // Attributes
+        div.classList.add('edit-wrap');
         editInput.type = 'text';
         editBtn.innerText = 'edit';
         closeEdit.innerText = 'X';
@@ -117,6 +118,7 @@ class Project {
     tasksElem() {
         const mainDiv = document.createElement('div');
         const ul = document.createElement('ul');
+        mainDiv.classList.add('project-wrap');
         this.projHeader.innerText = this.name;
 
         mainDiv.append(this.projHeader, this.editTitle(), ul);
