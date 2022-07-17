@@ -1,5 +1,5 @@
-import { allProjects } from './index.js';
-import { mainContent } from './variables.js';
+import { allProjects, modalControl } from './index.js';
+// import { mainContent } from './variables.js';
 
 class Task {
     constructor(title, desc, dueDate, priority, project) {
@@ -76,12 +76,15 @@ class Project {
 
     // Show project tasks
     tasksElem() {
-        const div = document.createElement('div');
-        const editBtn = document.createElement('button');
+        const mainDiv = document.createElement('div');
         const ul = document.createElement('ul');
+        const editBtn = document.createElement('button');
+        const saveEdit = document.createElement('button');
+        const editInput = document.createElement('input');
         this.projHeader.innerText = this.name;
         editBtn.innerText = 'edit';
-        div.append(this.projHeader, editBtn, ul);
+        saveEdit.innerText = 'update';
+        mainDiv.append(this.projHeader, editBtn, ul);
 
         editBtn.addEventListener('click', (e) => {
             this.name = 'What';
@@ -89,14 +92,14 @@ class Project {
             this.projBtn.innerText = this.name;
             this.option.innerText = this.name;
 
-            console.log('Open Modal');
         });
+
         ul.classList.add('task-wrap');
         this.tasks.forEach(task => {
             ul.appendChild(task.buildElem());
         });
 
-        return div;
+        return mainDiv;
     }
 
 }

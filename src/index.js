@@ -86,16 +86,13 @@ const modalControl = (() => {
     var span = document.getElementsByClassName("close")[0];
     // When the user clicks the button, open the modal 
     btn1.onclick = function (e) {
-        modal.classList.add('project-show');
-        modal.style.display = "block";
+        openModal('project-show');
     }
     btn2.onclick = function (e) {
-        modal.classList.add('task-show');
-        modal.style.display = "block";
+        openModal('task-show');
     }
     // When the user clicks on <span> (x), close the modal
     span.onclick = function () {
-
         closeModal()
     }
     // When the user clicks anywhere outside of the modal, close it
@@ -106,7 +103,7 @@ const modalControl = (() => {
     }
 
     const openModal = (e) => {
-        modal.classList.add('task-show');
+        modal.classList.add(e);
         modal.style.display = "block";
     }
 
@@ -120,4 +117,4 @@ const modalControl = (() => {
 
 
 
-export { allProjects }
+export { allProjects, modalControl }
