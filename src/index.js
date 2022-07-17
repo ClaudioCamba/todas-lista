@@ -42,6 +42,7 @@ const allProjects = (function () {
                 if (list[i].name === newTask.project) {
                     if (checkTaskList(list[i].tasks, newTask)) {
                         list[i].tasks.push(newTask);
+                        showMainContent(list[i].tasksElem());
                     } else {
                         console.log('Write Function to handle => Task Already Exists');
                     }
@@ -74,6 +75,9 @@ formSubmit.addEventListener('click', () => {
     allProjects.addNewTask(new Task(formTitle.value, formDesc.value, formDate.value, formPriority.value, formProject.value));
     modalControl.closeModal();
 })
+
+allProjects.addNewProj('Playing');
+allProjects.addNewTask(new Task('task1', 'This is my description people', '2022-07-15', '2', 'Playing'));
 
 
 const modalControl = (() => {
