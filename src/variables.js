@@ -11,8 +11,14 @@ const formProject = document.querySelector('#project');
 const formSubmit = document.querySelector('#formSubmit');
 // Sidebar Elements
 const projList = document.querySelector('.projects ul');
-// Main content
+// Main Elements
 const mainContent = document.querySelector('.main-content');
+// Modal Elements
+const modal = document.querySelector("#myModal");
+const modalProj = document.querySelector('.btn-proj');
+const modalTask = document.querySelector('.btn-task');
+const span = document.getElementsByClassName("close")[0];
+const taskForm = document.querySelector(".task-form");
 
 export {
     mainContent,
@@ -25,5 +31,10 @@ export {
     formDate,
     formPriority,
     formProject,
-    formSubmit
+    formSubmit,
+    modal,
+    modalProj,
+    modalTask,
+    span,
+    taskForm
 }

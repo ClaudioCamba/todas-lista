@@ -1,4 +1,7 @@
+// Module import from index.js
 import { allProjects, modalControl } from './index.js';
+// Project modal variables
+import { formTitle, formDesc, formDate, formPriority, formProject, taskForm, mainContent } from './variables.js';
 
 // Task class
 class Task {
@@ -26,16 +29,43 @@ class Task {
         this.delete = document.createElement('button');
         this.delete.innerText = 'X';
         this.delete.addEventListener('click', (e) => {
-            this.li.remove();
+            // this.li.remove();
             this.parentProj.tasks.splice(this.parentProj.tasks.indexOf(this.object), 1);
+            this.parentProj.projectShow();
         }); // Delete task
         return this.delete;
     }
 
-    editTask() {
+    updateEdit() {
+        const updateBtn = document.createElement('button');
+        updateBtn.innerText = 'Update';
+        updateBtn.classList.add('update-btn');
+        updateBtn.addEventListener('click', () => {
+            this.title = formTitle.value;
+            this.desc = formDesc.value;
+            this.dueDate = formDate.value;
+            this.priority = formPriority.value;
+            this.project = formProject.value;
+            if (this.project !== this.parentProj.name) {
+                allProjects.addNewTask(new Task(formTitle.value, formDesc.value, formDate.value, formPriority.value, formProject.value));
+                this.parentProj.tasks.splice(this.parentProj.tasks.indexOf(this.object), 1);
+            }
+            modalControl.closeModal();
+            this.parentProj.projectShow();
+        });
+        return updateBtn;
+    }
+
+    editTaskBtn() {
         this.edit = document.createElement('button');
         this.edit.innerText = 'edit';
         this.edit.addEventListener('click', (e) => {
+            taskForm.appendChild(this.updateEdit());
+            formTitle.value = this.title;
+            formDesc.value = this.desc;
+            formDate.value = this.dueDate;
+            formPriority.value = this.priority;
+            formProject.value = this.project;
             modalControl.openModal('task-edit-show');
         });
         return this.edit;
@@ -52,9 +82,11 @@ class Task {
         this.check.type = 'checkbox';
         this.check.checked = this.done;
         this.check.addEventListener('click', (e) => this.done = this.check.checked); // Update done key
-        this.li.append(this.check, this.titleElem, this.descElem, this.dueDateElem, this.priorityElem, this.projectElem, this.editTask(), this.deleteTaskBtn());
+        this.li.append(this.check, this.titleElem, this.descElem, this.dueDateElem, this.priorityElem, this.projectElem, this.editTaskBtn(), this.deleteTaskBtn());
         return this.li;
     }
+
+
 };
 
 // Project class
@@ -89,13 +121,15 @@ class Project {
         });
 
         this.projBtn.addEventListener('click', (e) => {
-            if (this.tasks.length > 0) {
-                allProjects.showMainContent(this.tasksElem());
-            } else {
-                console.log('Write Function to handle => No task ');
-            }
+            this.projectShow();
         });
         return this.sbLi;
+    }
+
+    // Clear & append tasks on page
+    projectShow() {
+        mainContent.innerHTML = '';
+        mainContent.appendChild(this.tasksElem());
     }
 
     // Task form option element

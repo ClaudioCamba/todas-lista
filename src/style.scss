@@ -227,12 +227,15 @@ body {
 
 .project-form,
 .task-form,
-.task-edit-show #formSubmit {
+.task-edit-show #formSubmit{
   display: none;
 }
 
-.project-show .project-form,
-.task-add-show .task-form,
-.task-edit-show .task-form {
-  display:block;
+.modal.project-show .project-form,
+.modal.task-add-show .task-form,
+.modal.task-edit-show .task-form,
+.modal.project-show,
+.modal.task-add-show,
+.modal.task-edit-show {
+  display: block;
 }

@@ -1,6 +1,12 @@
 'use strict';
+// Styling
 import './style.scss';
-import { mainContent, projList, projAddBtn, projCancelBtn, projInput, formTitle, formDesc, formDate, formPriority, formProject, formSubmit } from './variables.js';
+// All variables
+import {
+    mainContent, projList, projAddBtn, projCancelBtn, projInput, formTitle, formDesc,
+    formDate, formPriority, formProject, formSubmit, modal, modalProj, modalTask, span
+} from './variables.js';
+// Classes
 import { Task, Project } from './class.js';
 
 // Main control
@@ -13,7 +19,6 @@ const allProjects = (function () {
     // Update application
     const updateApp = () => {
         projList.innerHTML = '';
-        formProject.innerHTML = '<option value="inbox">inbox</option>';
         list.forEach(proj => {
             projList.appendChild(proj.liDOM()); // Update sidebar
             formProject.appendChild(proj.optionDOM()); // Update task form (project selection)
@@ -44,7 +49,7 @@ const allProjects = (function () {
                     if (checkTaskList(list[i].tasks, newTask)) {
                         newTask.parentProj = list[i];
                         list[i].tasks.push(newTask);
-                        showMainContent(list[i].tasksElem());
+                        list[i].projectShow();
                     } else {
                         console.log('Write Function to handle => Task Already Exists');
                     }
@@ -58,15 +63,34 @@ const allProjects = (function () {
     }
 
     // Main content showcase
-    const showMainContent = (e) => {
-        console.log(list);
-        mainContent.innerHTML = '';
-        mainContent.appendChild(e);
-    }
+    // const showMainContent = (e) => {
+    //     console.log(list);
+    //     mainContent.innerHTML = '';
+    //     mainContent.appendChild(e);
+    // }
 
-    return { addNewProj, updateApp, addNewTask, showMainContent, checkProjList };
+    return { addNewProj, updateApp, addNewTask, checkProjList };
 })();
 
+// Modal control
+const modalControl = (() => {
+    // When the user clicks the button, open the modal 
+    modalProj.onclick = () => openModal('project-show');
+    modalTask.onclick = () => openModal('task-add-show');
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = () => closeModal();
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = (e) => { if (e.target == modal) { closeModal(); } };
+    // Open / Close modal
+    const openModal = (e) => { modal.classList.add(e); }
+    const closeModal = () => {
+        if (modal.classList.contains('task-edit-show')) { document.querySelector('.update-btn').remove(); }
+        modal.className = 'modal';
+    }
+    return { closeModal, openModal };
+})();
+
+// Click event handlers for Project/ Task modal
 projAddBtn.addEventListener('click', () => {
     allProjects.addNewProj(projInput.value);
     modalControl.closeModal();
@@ -77,55 +101,10 @@ formSubmit.addEventListener('click', () => {
     modalControl.closeModal();
 })
 
-
-
-
-const modalControl = (() => {
-    // Get the modal
-    var modal = document.getElementById("myModal");
-    // Get the button that opens the modal
-    const btn1 = document.querySelector('.btn-proj');
-    const btn2 = document.querySelector('.btn-task');
-    // Get the <span> element that closes the modal
-    var span = document.getElementsByClassName("close")[0];
-    // When the user clicks the button, open the modal 
-    btn1.onclick = function (e) {
-        openModal('project-show');
-    }
-    btn2.onclick = function (e) {
-        openModal('task-show');
-    }
-    // When the user clicks on <span> (x), close the modal
-    span.onclick = function () {
-        closeModal()
-    }
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function (event) {
-        if (event.target == modal) {
-            closeModal();
-        }
-    };
-
-    const openModal = (e) => {
-        modal.classList.add(e);
-        modal.style.display = "block";
-    }
-
-    const closeModal = () => {
-        modal.className = 'modal';
-        // modal.classList.remove('project-show');
-        // modal.classList.remove('task-add-show');
-        // modal.classList.remove('task-edit-show');
-        modal.style.display = "none";
-    }
-    return { closeModal, openModal }
-})();
-
-
-allProjects.addNewProj('Playing');
-allProjects.addNewProj('What');
-allProjects.addNewTask(new Task('task1', 'This is my description people', '2022-07-15', '2', 'Playing'));
-allProjects.addNewTask(new Task('task2', 'This is my description people', '2022-07-18', '3', 'Playing'));
-allProjects.addNewTask(new Task('task3', 'This is my description people', '2022-07-18', '3', 'Playing'));
+allProjects.addNewProj('Inbox');
+allProjects.addNewProj('Shopping');
+allProjects.addNewTask(new Task('Call Mum', 'This is my description people', '2022-07-15', '3', 'Inbox'));
+allProjects.addNewTask(new Task('Pizza', 'This is my description people', '2022-07-18', '2', 'Shopping'));
+allProjects.addNewTask(new Task('Wine', 'This is my description people', '2022-07-18', '1', 'Shopping'));
 
 export { allProjects, modalControl }
