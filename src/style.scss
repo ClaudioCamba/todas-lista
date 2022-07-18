@@ -226,11 +226,13 @@ body {
 }
 
 .project-form,
-.task-form {
+.task-form,
+.task-edit-show #formSubmit {
   display: none;
 }
 
 .project-show .project-form,
-.task-show .task-form {
+.task-add-show .task-form,
+.task-edit-show .task-form {
   display:block;
 }

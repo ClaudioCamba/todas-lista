@@ -77,11 +77,7 @@ formSubmit.addEventListener('click', () => {
     modalControl.closeModal();
 })
 
-allProjects.addNewProj('Playing');
-allProjects.addNewProj('What');
-allProjects.addNewTask(new Task('task1', 'This is my description people', '2022-07-15', '2', 'Playing'));
-allProjects.addNewTask(new Task('task2', 'This is my description people', '2022-07-18', '3', 'Playing'));
-allProjects.addNewTask(new Task('task3', 'This is my description people', '2022-07-18', '3', 'Playing'));
+
 
 
 const modalControl = (() => {
@@ -108,7 +104,7 @@ const modalControl = (() => {
         if (event.target == modal) {
             closeModal();
         }
-    }
+    };
 
     const openModal = (e) => {
         modal.classList.add(e);
@@ -116,13 +112,20 @@ const modalControl = (() => {
     }
 
     const closeModal = () => {
-        modal.classList.remove('project-show');
-        modal.classList.remove('task-show');
+        modal.className = 'modal';
+        // modal.classList.remove('project-show');
+        // modal.classList.remove('task-add-show');
+        // modal.classList.remove('task-edit-show');
         modal.style.display = "none";
     }
     return { closeModal, openModal }
 })();
 
 
+allProjects.addNewProj('Playing');
+allProjects.addNewProj('What');
+allProjects.addNewTask(new Task('task1', 'This is my description people', '2022-07-15', '2', 'Playing'));
+allProjects.addNewTask(new Task('task2', 'This is my description people', '2022-07-18', '3', 'Playing'));
+allProjects.addNewTask(new Task('task3', 'This is my description people', '2022-07-18', '3', 'Playing'));
 
 export { allProjects, modalControl }

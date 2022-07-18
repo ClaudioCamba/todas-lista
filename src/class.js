@@ -1,5 +1,5 @@
-import { allProjects } from './index.js';
-// import { mainContent } from './variables.js';
+import { allProjects, modalControl } from './index.js';
+
 // Task class
 class Task {
     constructor(title, desc, dueDate, priority, project) {
@@ -27,15 +27,23 @@ class Task {
         this.delete.innerText = 'X';
         this.delete.addEventListener('click', (e) => {
             this.li.remove();
-            this.parentProj.tasks.splice(this.parentProj.tasks.indexOf(e), 1);
+            this.parentProj.tasks.splice(this.parentProj.tasks.indexOf(this.object), 1);
         }); // Delete task
         return this.delete;
+    }
+
+    editTask() {
+        this.edit = document.createElement('button');
+        this.edit.innerText = 'edit';
+        this.edit.addEventListener('click', (e) => {
+            modalControl.openModal('task-edit-show');
+        });
+        return this.edit;
     }
 
     buildElem() {
         this.li = document.createElement('li');
         this.check = document.createElement('input');
-        this.edit = document.createElement('button');
         this.titleElem.innerText = this.title;
         this.descElem.innerText = this.desc;
         this.dueDateElem.innerText = this.dueDate;
@@ -43,15 +51,8 @@ class Task {
         this.projectElem.innerText = this.project;
         this.check.type = 'checkbox';
         this.check.checked = this.done;
-        this.edit.innerText = 'edit';
-        this.check.addEventListener('click', (e) => {
-            console.log('test');
-            this.done = this.check.checked
-        }); // Update done key
-        this.edit.addEventListener('click', (e) => {
-            console.log('testing');
-        });
-        this.li.append(this.check, this.titleElem, this.descElem, this.dueDateElem, this.priorityElem, this.projectElem, this.edit, this.deleteTaskBtn());
+        this.check.addEventListener('click', (e) => this.done = this.check.checked); // Update done key
+        this.li.append(this.check, this.titleElem, this.descElem, this.dueDateElem, this.priorityElem, this.projectElem, this.editTask(), this.deleteTaskBtn());
         return this.li;
     }
 };
