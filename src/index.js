@@ -9,7 +9,6 @@ const allProjects = (function () {
 
     const checkProjList = (p) => list.every((proj) => proj.name !== p); // Check array if project already exists in projects
     const checkTaskList = (taskList, newTask) => taskList.every((task) => task.title !== newTask.title) // Check array if project already exists in tasks
-    const removeProj = (e) => { list.splice(list.indexOf(e), 1); updateApp(); }; // Remove project from array
 
     // Update application
     const updateApp = () => {
@@ -65,7 +64,7 @@ const allProjects = (function () {
         mainContent.appendChild(e);
     }
 
-    return { addNewProj, updateApp, addNewTask, removeProj, showMainContent, checkProjList };
+    return { addNewProj, updateApp, addNewTask, showMainContent, checkProjList };
 })();
 
 projAddBtn.addEventListener('click', () => {

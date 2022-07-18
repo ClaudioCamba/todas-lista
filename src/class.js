@@ -14,6 +14,7 @@ class Task {
         this.check = null;
         this.edit = null;
         this.parentProj = null;
+        this.li = null;
         this.titleElem = document.createElement('h4');
         this.descElem = document.createElement('p');
         this.dueDateElem = document.createElement('p');
@@ -21,9 +22,18 @@ class Task {
         this.projectElem = document.createElement('p');
     }
 
-    buildElem() {
-        const li = document.createElement('li');
+    deleteTaskBtn() {
         this.delete = document.createElement('button');
+        this.delete.innerText = 'X';
+        this.delete.addEventListener('click', (e) => {
+            this.li.remove();
+            this.parentProj.tasks.splice(this.parentProj.tasks.indexOf(e), 1);
+        }); // Delete task
+        return this.delete;
+    }
+
+    buildElem() {
+        this.li = document.createElement('li');
         this.check = document.createElement('input');
         this.edit = document.createElement('button');
         this.titleElem.innerText = this.title;
@@ -33,14 +43,7 @@ class Task {
         this.projectElem.innerText = this.project;
         this.check.type = 'checkbox';
         this.check.checked = this.done;
-        this.delete.innerText = 'X';
         this.edit.innerText = 'edit';
-        this.delete.addEventListener('click', (e) => {
-            li.remove();
-
-            this.parentProj.tasks.splice(this.parentProj.tasks.indexOf(e), 1);
-            // allProjects.removeTask(this.object); // Remove task from list variable (index.js => allProjects)
-        }); // Delete task
         this.check.addEventListener('click', (e) => {
             console.log('test');
             this.done = this.check.checked
@@ -48,8 +51,8 @@ class Task {
         this.edit.addEventListener('click', (e) => {
             console.log('testing');
         });
-        li.append(this.check, this.titleElem, this.descElem, this.dueDateElem, this.priorityElem, this.projectElem, this.edit, this.delete);
-        return li;
+        this.li.append(this.check, this.titleElem, this.descElem, this.dueDateElem, this.priorityElem, this.projectElem, this.edit, this.deleteTaskBtn());
+        return this.li;
     }
 };
 
@@ -79,8 +82,9 @@ class Project {
         this.sbLi.append(this.projBtn, this.closeBtn);
         // Remove project 
         this.closeBtn.addEventListener('click', (e) => {
-            allProjects.removeProj(this.object); // Remove project from list variable (index.js => allProjects)
             this.sbLi.remove(); // Remove DOM element
+            this.option.remove(); // Remove task creation option
+            this.allProj.splice(this.allProj.indexOf(e), 1); // Remove from project list
         });
 
         this.projBtn.addEventListener('click', (e) => {
