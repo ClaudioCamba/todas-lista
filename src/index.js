@@ -9,7 +9,7 @@ const allProjects = (function () {
 
     const checkProjList = (p) => list.every((proj) => proj.name !== p); // Check array if project already exists in projects
     const checkTaskList = (taskList, newTask) => taskList.every((task) => task.title !== newTask.title) // Check array if project already exists in tasks
-    const removeProj = (e) => { list.splice(list.indexOf(e), 1); }; // Remove project from array
+    const removeProj = (e) => { list.splice(list.indexOf(e), 1); updateApp(); }; // Remove project from array
 
     // Update application
     const updateApp = () => {
@@ -25,7 +25,9 @@ const allProjects = (function () {
     const addNewProj = (p) => {
         if (p !== '') {
             if (checkProjList(p)) {
-                list.push(new Project(p)); // Add new project to array
+                const newProject = new Project(p);
+                newProject.allProj = list;
+                list.push(newProject); // Add new project to array
             } else {
                 console.log('Write Function to handle => Project Already Exists');
             }
@@ -41,6 +43,7 @@ const allProjects = (function () {
             for (let i = 0; i < list.length; i++) {
                 if (list[i].name === newTask.project) {
                     if (checkTaskList(list[i].tasks, newTask)) {
+                        newTask.parentProj = list[i];
                         list[i].tasks.push(newTask);
                         showMainContent(list[i].tasksElem());
                     } else {
@@ -62,9 +65,8 @@ const allProjects = (function () {
         mainContent.appendChild(e);
     }
 
-    return { addNewProj, updateApp, addNewTask, removeProj, showMainContent, checkProjList, list };
+    return { addNewProj, updateApp, addNewTask, removeProj, showMainContent, checkProjList };
 })();
-
 
 projAddBtn.addEventListener('click', () => {
     allProjects.addNewProj(projInput.value);
@@ -77,8 +79,10 @@ formSubmit.addEventListener('click', () => {
 })
 
 allProjects.addNewProj('Playing');
+allProjects.addNewProj('What');
 allProjects.addNewTask(new Task('task1', 'This is my description people', '2022-07-15', '2', 'Playing'));
 allProjects.addNewTask(new Task('task2', 'This is my description people', '2022-07-18', '3', 'Playing'));
+allProjects.addNewTask(new Task('task3', 'This is my description people', '2022-07-18', '3', 'Playing'));
 
 
 const modalControl = (() => {
