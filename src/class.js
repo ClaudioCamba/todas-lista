@@ -9,23 +9,30 @@ class Task {
         this.priority = priority;
         this.project = project;
         this.object = this;
+        this.done = false;
+        this.check = document.createElement('input');
+        this.titleElem = document.createElement('h4');
+        this.descElem = document.createElement('p');
+        this.dueDateElem = document.createElement('p');
+        this.priorityElem = document.createElement('p');
+        this.projectElem = document.createElement('p');
+        this.edit = document.createElement('button');
     }
 
     buildElem() {
         const li = document.createElement('li');
-        const title = document.createElement('h4');
-        const desc = document.createElement('p');
-        const date = document.createElement('p');
-        const priv = document.createElement('p');
-        const proj = document.createElement('p');
+        this.titleElem.innerText = this.title;
+        this.descElem.innerText = this.desc;
+        this.dueDateElem.innerText = this.dueDate;
+        this.priorityElem.innerText = this.priority;
+        this.projectElem.innerText = this.project;
+        this.check.type = 'checkbox';
+        this.check.checked = this.done;
+        this.edit.innerText = 'edit';
 
-        title.innerText = this.title;
-        desc.innerText = this.desc;
-        date.innerText = this.dueDate;
-        priv.innerText = this.priority;
-        proj.innerText = this.project;
+        this.check.addEventListener('click', (e) => this.done = this.check.checked); // Update done key
 
-        li.append(title, desc, date, priv, proj);
+        li.append(this.check, this.titleElem, this.descElem, this.dueDateElem, this.priorityElem, this.projectElem, this.edit);
         return li;
     }
 };

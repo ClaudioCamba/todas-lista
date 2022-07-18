@@ -78,6 +78,7 @@ formSubmit.addEventListener('click', () => {
 
 allProjects.addNewProj('Playing');
 allProjects.addNewTask(new Task('task1', 'This is my description people', '2022-07-15', '2', 'Playing'));
+allProjects.addNewTask(new Task('task2', 'This is my description people', '2022-07-18', '3', 'Playing'));
 
 
 const modalControl = (() => {
