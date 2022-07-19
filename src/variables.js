@@ -1,6 +1,5 @@
 // Project Form
 const projAddBtn = document.querySelector('.project-form .add');
-const projCancelBtn = document.querySelector('.project-form .cancel');
 const projInput = document.querySelector('.project-form .project');
 // Form Elements
 const formTitle = document.querySelector('#title');
@@ -11,6 +10,8 @@ const formProject = document.querySelector('#project');
 const formSubmit = document.querySelector('#formSubmit');
 // Sidebar Elements
 const projList = document.querySelector('.projects ul');
+const sideBar = document.querySelector('.sidebar');
+const allTskBtn = document.querySelector('.allTasks');
 // Main Elements
 const mainContent = document.querySelector('.main-content');
 // Modal Elements
@@ -24,7 +25,6 @@ export {
     mainContent,
     projList,
     projAddBtn,
-    projCancelBtn,
     projInput,
     formTitle,
     formDesc,
@@ -36,5 +36,7 @@ export {
     modalProj,
     modalTask,
     span,
-    taskForm
+    taskForm,
+    sideBar,
+    allTskBtn
 }

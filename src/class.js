@@ -1,7 +1,9 @@
 // Module import from index.js
 import { allProjects, modalControl } from './index.js';
+// Date formatting 
+import { format } from 'date-fns'
 // Project modal variables
-import { formTitle, formDesc, formDate, formPriority, formProject, taskForm, mainContent } from './variables.js';
+import { formTitle, formDesc, formDate, formPriority, formProject, taskForm, mainContent, allTskBtn } from './variables.js';
 
 // Task class
 class Task {
@@ -30,6 +32,7 @@ class Task {
         this.delete.innerText = 'X';
         this.delete.addEventListener('click', (e) => {
             // this.li.remove();
+            // console.log(this.parentProj);
             this.parentProj.tasks.splice(this.parentProj.tasks.indexOf(this.object), 1);
             this.parentProj.projectShow();
         }); // Delete task
@@ -76,7 +79,7 @@ class Task {
         this.check = document.createElement('input');
         this.titleElem.innerText = this.title;
         this.descElem.innerText = this.desc;
-        this.dueDateElem.innerText = this.dueDate;
+        this.dueDateElem.innerText = format(new Date(this.dueDate), 'dd/MM/yyyy');
         this.priorityElem.innerText = this.priority;
         this.projectElem.innerText = this.project;
         this.check.type = 'checkbox';
@@ -85,8 +88,6 @@ class Task {
         this.li.append(this.check, this.titleElem, this.descElem, this.dueDateElem, this.priorityElem, this.projectElem, this.editTaskBtn(), this.deleteTaskBtn());
         return this.li;
     }
-
-
 };
 
 // Project class
@@ -111,6 +112,7 @@ class Project {
         this.closeBtn = document.createElement('button');
         this.projBtn = document.createElement('button');
         this.projBtn.innerText = this.name;
+        this.projBtn.classList.add('proj-name');
         this.closeBtn.innerText = 'X';
         this.sbLi.append(this.projBtn, this.closeBtn);
         // Remove project 
@@ -128,8 +130,10 @@ class Project {
 
     // Clear & append tasks on page
     projectShow() {
-        mainContent.innerHTML = '';
-        mainContent.appendChild(this.tasksElem());
+        if (allTskBtn.classList.contains('active') === false) {
+            mainContent.innerHTML = '';
+            mainContent.appendChild(this.tasksElem());
+        }
     }
 
     // Task form option element

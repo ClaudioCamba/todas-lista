@@ -1,10 +1,11 @@
 'use strict';
 // Styling
 import './style.scss';
+
 // All variables
 import {
-    mainContent, projList, projAddBtn, projCancelBtn, projInput, formTitle, formDesc,
-    formDate, formPriority, formProject, formSubmit, modal, modalProj, modalTask, span
+    mainContent, projList, projAddBtn, projInput, formTitle, formDesc, formDate, formPriority,
+    formProject, formSubmit, modal, modalProj, modalTask, span, sideBar, allTskBtn
 } from './variables.js';
 // Classes
 import { Task, Project } from './class.js';
@@ -41,7 +42,7 @@ const allProjects = (function () {
         updateApp();
     }
 
-    // Add new projects
+    // Add new task
     const addNewTask = (newTask) => {
         if (newTask.title !== '') {
             for (let i = 0; i < list.length; i++) {
@@ -62,14 +63,38 @@ const allProjects = (function () {
         updateApp();
     }
 
-    // Main content showcase
-    // const showMainContent = (e) => {
-    //     console.log(list);
-    //     mainContent.innerHTML = '';
-    //     mainContent.appendChild(e);
-    // }
+    const showAllTask = () => {
+        const div = document.createElement('div');
+        const h3 = document.createElement('h3');
+        const ul = document.createElement('ul');
+        div.classList.add('project-wrap');
+        ul.classList.add('task-wrap');
+        h3.innerText = 'All Tasks';
+        for (const proj of list) {
+            console.log(proj.tasks.length);
+            if (proj.tasks.length > 0) {
+                proj.tasks.forEach(task => {
+                    ul.appendChild(task.buildElem());
+                });
+            }
+        }
+        div.append(h3, ul);
+        mainContent.innerHTML = '';
+        mainContent.appendChild(div);
 
-    return { addNewProj, updateApp, addNewTask, checkProjList };
+
+    }
+
+    sideBar.addEventListener('click', (e) => {
+        if (e.target.classList.contains('allTasks')) {
+            e.target.classList.add('active');
+            showAllTask();
+        } else if (e.target.classList.contains('proj-name')) {
+            allTskBtn.classList.remove('active');
+        }
+    });
+
+    return { addNewProj, updateApp, addNewTask, checkProjList, showAllTask };
 })();
 
 // Modal control
@@ -87,19 +112,22 @@ const modalControl = (() => {
         if (modal.classList.contains('task-edit-show')) { document.querySelector('.update-btn').remove(); }
         modal.className = 'modal';
     }
+
+    // Click event handlers for Project/ Task modal
+    projAddBtn.addEventListener('click', () => {
+        allProjects.addNewProj(projInput.value);
+        modalControl.closeModal();
+    });
+
+    formSubmit.addEventListener('click', () => {
+        allProjects.addNewTask(new Task(formTitle.value, formDesc.value, formDate.value, formPriority.value, formProject.value));
+        modalControl.closeModal();
+    })
+
     return { closeModal, openModal };
 })();
 
-// Click event handlers for Project/ Task modal
-projAddBtn.addEventListener('click', () => {
-    allProjects.addNewProj(projInput.value);
-    modalControl.closeModal();
-});
 
-formSubmit.addEventListener('click', () => {
-    allProjects.addNewTask(new Task(formTitle.value, formDesc.value, formDate.value, formPriority.value, formProject.value));
-    modalControl.closeModal();
-})
 
 allProjects.addNewProj('Inbox');
 allProjects.addNewProj('Shopping');
