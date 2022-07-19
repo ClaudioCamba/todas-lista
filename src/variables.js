@@ -20,6 +20,8 @@ const modalProj = document.querySelector('.btn-proj');
 const modalTask = document.querySelector('.btn-task');
 const span = document.getElementsByClassName("close")[0];
 const taskForm = document.querySelector(".task-form");
+const projError = document.querySelector(".proj-error");
+const taskError = document.querySelector(".task-error");
 
 export {
     mainContent,
@@ -38,5 +40,7 @@ export {
     span,
     taskForm,
     sideBar,
-    allTskBtn
+    allTskBtn,
+    projError,
+    taskError
 }

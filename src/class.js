@@ -52,6 +52,18 @@ class Task {
             if (this.project !== this.parentProj.name) {
                 allProjects.addNewTask(new Task(formTitle.value, formDesc.value, formDate.value, formPriority.value, formProject.value));
                 this.parentProj.tasks.splice(this.parentProj.tasks.indexOf(this.object), 1);
+                if (this.done === true) {
+                    for (const proj of this.parentProj.allProj) {
+                        if (proj.name === this.project) {
+                            console.log(proj);
+                            for (const task of proj.tasks) {
+                                if (task.title === this.title) {
+                                    task.done = true;
+                                }
+                            }
+                        }
+                    }
+                }
             }
             modalControl.closeModal();
             this.parentProj.projectShow();
@@ -108,13 +120,15 @@ class Project {
 
     // Sidebar li element
     liDOM() {
+
         this.sbLi = document.createElement('li');
         this.closeBtn = document.createElement('button');
         this.projBtn = document.createElement('button');
         this.projBtn.innerText = this.name;
         this.projBtn.classList.add('proj-name');
         this.closeBtn.innerText = 'X';
-        this.sbLi.append(this.projBtn, this.closeBtn);
+        this.name === 'inbox' ? this.sbLi.append(this.projBtn) : this.sbLi.append(this.projBtn, this.closeBtn)
+        // this.sbLi.append(this.projBtn, this.closeBtn);
         // Remove project 
         this.closeBtn.addEventListener('click', (e) => {
             this.sbLi.remove(); // Remove DOM element
@@ -130,9 +144,12 @@ class Project {
 
     // Clear & append tasks on page
     projectShow() {
+        // if (allTskBtn.classList.contains('active') === false) {
         if (allTskBtn.classList.contains('active') === false) {
             mainContent.innerHTML = '';
             mainContent.appendChild(this.tasksElem());
+        } else {
+            allProjects.showAllTask();
         }
     }
 
@@ -149,20 +166,22 @@ class Project {
         const editBtn = document.createElement('button');
         const closeEdit = document.createElement('button');
         const editInput = document.createElement('input');
+        const error = document.createElement('p');
         // Attributes
+        closeEdit.classList.add('edit-proj-close');
+        editInput.classList.add('edit-proj-input');
         div.classList.add('edit-wrap');
+        error.classList.add('proj-edit-error');
         editInput.type = 'text';
         editBtn.innerText = 'edit';
         closeEdit.innerText = 'X';
-        closeEdit.classList.add('edit-proj-close');
-        editInput.classList.add('edit-proj-input');
         // Append
-        div.append(editInput, closeEdit, editBtn);
+        if (this.name !== 'inbox') { div.append(error, editInput, closeEdit, editBtn) };
         // Click events
         editBtn.addEventListener('click', (e) => {
             if (div.classList.contains('active')) {
-                if (allProjects.checkProjList(editInput.value)) {
-                    this.name = editInput.value;
+                if (allProjects.checkProjList(editInput.value.toLowerCase())) {
+                    this.name = editInput.value.toLowerCase();
                     this.projHeader.innerText = this.name;
                     this.projBtn.innerText = this.name;
                     this.option.innerText = this.name;
@@ -173,7 +192,7 @@ class Project {
                     });
                     div.classList.remove('active');
                 } else {
-                    console.log('Write Function to handle => Project Already Exists');
+                    error.innerText = `${editInput.value} project already exists`;
                 }
             } else {
                 editBtn.innerText = 'update';
@@ -183,6 +202,7 @@ class Project {
         });
         closeEdit.addEventListener('click', (e) => {
             div.classList.remove('active');
+            editBtn.innerText = 'edit';
         });
 
         return div;

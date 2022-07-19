@@ -5,7 +5,7 @@ import './style.scss';
 // All variables
 import {
     mainContent, projList, projAddBtn, projInput, formTitle, formDesc, formDate, formPriority,
-    formProject, formSubmit, modal, modalProj, modalTask, span, sideBar, allTskBtn
+    formProject, formSubmit, modal, modalProj, modalTask, span, sideBar, allTskBtn, projError, taskError
 } from './variables.js';
 // Classes
 import { Task, Project } from './class.js';
@@ -29,15 +29,17 @@ const allProjects = (function () {
     // Add new projects
     const addNewProj = (p) => {
         if (p !== '') {
-            if (checkProjList(p)) {
-                const newProject = new Project(p);
+            if (checkProjList(p.toLowerCase())) {
+                const newProject = new Project(p.toLowerCase());
                 newProject.allProj = list;
                 list.push(newProject); // Add new project to array
+                modalControl.closeModal();
+                projError.innerText = '';
             } else {
-                console.log('Write Function to handle => Project Already Exists');
+                projError.innerText = `${p} project already exists`;
             }
         } else {
-            console.log('Write Function to handle => Empty Project Input');
+            projError.innerText = `Empty input cannot be submitted`;
         }
         updateApp();
     }
@@ -51,14 +53,15 @@ const allProjects = (function () {
                         newTask.parentProj = list[i];
                         list[i].tasks.push(newTask);
                         list[i].projectShow();
+                        modalControl.closeModal();
+                        taskError.innerText = '';
                     } else {
-                        console.log('Write Function to handle => Task Already Exists');
+                        taskError.innerText = `${newTask.title} already exists within this ${newTask.project} project`;
                     }
                 }
             }
-
         } else {
-            console.log('Write Function to handle => Empty Task Input');
+            taskError.innerText = `Empty input cannot be submitted`;
         }
         updateApp();
     }
@@ -71,7 +74,6 @@ const allProjects = (function () {
         ul.classList.add('task-wrap');
         h3.innerText = 'All Tasks';
         for (const proj of list) {
-            console.log(proj.tasks.length);
             if (proj.tasks.length > 0) {
                 proj.tasks.forEach(task => {
                     ul.appendChild(task.buildElem());
@@ -81,8 +83,6 @@ const allProjects = (function () {
         div.append(h3, ul);
         mainContent.innerHTML = '';
         mainContent.appendChild(div);
-
-
     }
 
     sideBar.addEventListener('click', (e) => {
@@ -116,12 +116,10 @@ const modalControl = (() => {
     // Click event handlers for Project/ Task modal
     projAddBtn.addEventListener('click', () => {
         allProjects.addNewProj(projInput.value);
-        modalControl.closeModal();
     });
 
     formSubmit.addEventListener('click', () => {
         allProjects.addNewTask(new Task(formTitle.value, formDesc.value, formDate.value, formPriority.value, formProject.value));
-        modalControl.closeModal();
     })
 
     return { closeModal, openModal };
@@ -131,8 +129,8 @@ const modalControl = (() => {
 
 allProjects.addNewProj('Inbox');
 allProjects.addNewProj('Shopping');
-allProjects.addNewTask(new Task('Call Mum', 'This is my description people', '2022-07-15', '3', 'Inbox'));
-allProjects.addNewTask(new Task('Pizza', 'This is my description people', '2022-07-18', '2', 'Shopping'));
-allProjects.addNewTask(new Task('Wine', 'This is my description people', '2022-07-18', '1', 'Shopping'));
+allProjects.addNewTask(new Task('Call Mum', 'This is my description people', '2022-07-15', '3', 'inbox'));
+allProjects.addNewTask(new Task('Pizza', 'This is my description people', '2022-07-18', '2', 'shopping'));
+allProjects.addNewTask(new Task('Wine', 'This is my description people', '2022-07-18', '1', 'shopping'));
 
 export { allProjects, modalControl }
