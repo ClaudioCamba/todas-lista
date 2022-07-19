@@ -91,7 +91,7 @@ class Task {
         this.check = document.createElement('input');
         this.titleElem.innerText = this.title;
         this.descElem.innerText = this.desc;
-        this.dueDateElem.innerText = format(new Date(this.dueDate), 'dd/MM/yyyy');
+        if (this.dueDate !== '') { this.dueDateElem.innerText = format(new Date(this.dueDate), 'dd/MM/yyyy'); }
         this.priorityElem.innerText = this.priority;
         this.projectElem.innerText = this.project;
         this.check.type = 'checkbox';
