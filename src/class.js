@@ -7,14 +7,14 @@ import { formTitle, formDesc, formDate, formPriority, formProject, taskForm, mai
 
 // Task class
 class Task {
-    constructor(title, desc, dueDate, priority, project) {
+    constructor(title, desc, dueDate, priority, project, done) {
         this.title = title;
         this.desc = desc;
         this.dueDate = dueDate;
         this.priority = priority;
         this.project = project;
         this.object = this;
-        this.done = false;
+        this.done = done;
         this.delete = null;
         this.check = null;
         this.edit = null;
@@ -35,6 +35,7 @@ class Task {
             // console.log(this.parentProj);
             this.parentProj.tasks.splice(this.parentProj.tasks.indexOf(this.object), 1);
             this.parentProj.projectShow();
+            allProjects.saveProjects();
         }); // Delete task
         return this.delete;
     }
@@ -50,23 +51,24 @@ class Task {
             this.priority = formPriority.value;
             this.project = formProject.value;
             if (this.project !== this.parentProj.name) {
-                allProjects.addNewTask(new Task(formTitle.value, formDesc.value, formDate.value, formPriority.value, formProject.value));
+                allProjects.addNewTask(new Task(formTitle.value, formDesc.value, formDate.value, formPriority.value, formProject.value, this.done));
                 this.parentProj.tasks.splice(this.parentProj.tasks.indexOf(this.object), 1);
-                if (this.done === true) {
-                    for (const proj of this.parentProj.allProj) {
-                        if (proj.name === this.project) {
-                            console.log(proj);
-                            for (const task of proj.tasks) {
-                                if (task.title === this.title) {
-                                    task.done = true;
-                                }
-                            }
-                        }
-                    }
-                }
+                // if (this.done === true) {
+                //     for (const proj of this.parentProj.allProj) {
+                //         if (proj.name === this.project) {
+                //             console.log(proj);
+                //             for (const task of proj.tasks) {
+                //                 if (task.title === this.title) {
+                //                     task.done = true;
+                //                 }
+                //             }
+                //         }
+                //     }
+                // }
             }
             modalControl.closeModal();
             this.parentProj.projectShow();
+            allProjects.saveProjects();
         });
         return updateBtn;
     }
@@ -96,7 +98,10 @@ class Task {
         this.projectElem.innerText = this.project;
         this.check.type = 'checkbox';
         this.check.checked = this.done;
-        this.check.addEventListener('click', (e) => this.done = this.check.checked); // Update done key
+        this.check.addEventListener('click', (e) => {
+            this.done = this.check.checked;
+            allProjects.saveProjects();
+        }); // Update done key
         this.li.append(this.check, this.titleElem, this.descElem, this.dueDateElem, this.priorityElem, this.projectElem, this.editTaskBtn(), this.deleteTaskBtn());
         return this.li;
     }
@@ -116,8 +121,6 @@ class Project {
         this.closeBtn = null;
     }
 
-    addToTasks(p) { this.tasks.push(p) }; // Add new projects
-
     // Sidebar li element
     liDOM() {
 
@@ -134,6 +137,8 @@ class Project {
             this.sbLi.remove(); // Remove DOM element
             this.option.remove(); // Remove task creation option
             this.allProj.splice(this.allProj.indexOf(e), 1); // Remove from project list
+            allProjects.showAllTask();
+            allProjects.saveProjects();
         });
 
         this.projBtn.addEventListener('click', (e) => {
@@ -198,8 +203,9 @@ class Project {
                 editBtn.innerText = 'update';
                 div.classList.add('active');
             }
-
+            allProjects.saveProjects();
         });
+
         closeEdit.addEventListener('click', (e) => {
             div.classList.remove('active');
             editBtn.innerText = 'edit';
