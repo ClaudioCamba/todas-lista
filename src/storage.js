@@ -26,7 +26,6 @@ const storeProjects = (function () {
         }
     };
 
-
     const storageAvail = () => storageAvailable('localStorage') ? /* Works */ true : /* Not working */ false;
 
     const setLocal = (key, json) => {

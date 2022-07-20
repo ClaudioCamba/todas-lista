@@ -150,9 +150,9 @@ const allProjects = (function () {
                     // Default projects if nothing in localStorage
                     addNewProj('Inbox');
                     addNewProj('Shopping');
-                    addNewTask(new Task('Call Mum', 'This is my description people', '2022-07-15', '3', 'inbox', false));
-                    addNewTask(new Task('Pizza', 'This is my description people', '2022-07-18', '2', 'shopping', false));
-                    addNewTask(new Task('Wine', 'This is my description people', '2022-07-18', '1', 'shopping', false));
+                    addNewTask(new Task('Call Mum', 'This is my description example', '2022-07-15', '3', 'inbox', false));
+                    addNewTask(new Task('Pizza', 'This is my description example', '2022-07-18', '2', 'shopping', false));
+                    addNewTask(new Task('Wine', 'This is my description example', '2022-07-18', '1', 'shopping', false));
                     clearInterval(tryGetProj); // Clear interval
                 } else {
                     // console.log('found cleared');
