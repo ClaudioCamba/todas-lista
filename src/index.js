@@ -9,6 +9,8 @@ import {
 } from './variables.js';
 // Classes
 import { Task, Project } from './class.js';
+// Store projects
+import { storeProjects } from './storage';
 
 // Main control
 const allProjects = (function () {
@@ -66,6 +68,7 @@ const allProjects = (function () {
         updateApp();
     }
 
+    // Show all tasks function
     const showAllTask = () => {
         const div = document.createElement('div');
         const h3 = document.createElement('h3');
@@ -86,35 +89,9 @@ const allProjects = (function () {
     }
 
 
-
+    // Sidebar click management
     sideBar.addEventListener('click', (e) => {
-
-        // Building object to convert into json
-        const stored = []
-
-        for (let i = 0; i < list.length; i++) {
-            const proj = { 'name': list[i].name };
-            if (list[i].tasks.length > 0) {
-                proj.tasks = []
-                for (let x = 0; x < list[i].tasks.length; x++) {
-                    const task = {
-                        done: list[i].tasks[x].done,
-                        title: list[i].tasks[x].title,
-                        desc: list[i].tasks[x].desc,
-                        date: list[i].tasks[x].dueDate,
-                        priority: list[i].tasks[x].priority,
-                        project: list[i].tasks[x].parentProj.name,
-                    };
-                    proj.tasks.push(task);
-                }
-            }
-
-            stored.push(proj);
-        }
-
-
-        console.log(JSON.stringify(stored))
-        console.log(stored);
+        console.log(storeProjects.storageAvail())
 
         if (e.target.classList.contains('allTasks')) {
             e.target.classList.add('active');
@@ -166,38 +143,3 @@ allProjects.addNewTask(new Task('Wine', 'This is my description people', '2022-0
 export { allProjects, modalControl }
 
 
-// Storage Functions
-
-function storageAvailable(type) {
-    let storage;
-    try {
-        storage = window[type];
-        const x = '__storage_test__';
-        storage.setItem(x, x);
-        storage.removeItem(x);
-        return true;
-    }
-    catch (e) {
-        return e instanceof DOMException && (
-            // everything except Firefox
-            e.code === 22 ||
-            // Firefox
-            e.code === 1014 ||
-            // test name field too, because code might not be present
-            // everything except Firefox
-            e.name === 'QuotaExceededError' ||
-            // Firefox
-            e.name === 'NS_ERROR_DOM_QUOTA_REACHED') &&
-            // acknowledge QuotaExceededError only if there's something already stored
-            (storage && storage.length !== 0);
-    }
-}
-
-if (storageAvailable('localStorage')) {
-    // Yippee! We can use localStorage awesomeness
-    console.log('storage working')
-}
-else {
-    // Too bad, no localStorage for us
-    console.log('storage NOT')
-}
