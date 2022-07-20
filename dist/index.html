@@ -10,7 +10,7 @@
     <div id="todas-app">
       <div class="todas-wrap">
         <header class="header">
-          <h1>LOGO</h1>
+          <h1>TODAS LISTA</h1>
         </header>
         <!-- Sidebar Content -->
         <div class="sidebar">
@@ -18,7 +18,7 @@
           <div class="projects">
             <h2>Projects</h2>
             <button class="btn-proj">+Project</button>
-            <button class="btn-task">+Task</button>
+            <button class="btn-task">+</button>
             <ul class="list"></ul>
           </div>
         </div>
@@ -32,7 +32,11 @@
             <span class="close">&times;</span>
             <!-- Project Form -->
             <div class="project-form">
-              <input type="text" class="project" value="Test" />
+              <input
+                type="text"
+                class="project"
+                placeholder="Enter Project Title"
+              />
               <input type="button" class="add" value="Add" />
               <p class="proj-error"></p>
             </div>
@@ -40,7 +44,7 @@
             <div class="task-form">
               <label for="title">
                 Title
-                <input id="title" type="text" value="Clean" />
+                <input id="title" type="text" placeholder="Enter Task Title" />
               </label>
 
               <label for="desc">
@@ -48,18 +52,18 @@
                 <input
                   id="desc"
                   type="text"
-                  value="This is my description people"
+                  placeholder="Enter the task description example"
                 />
               </label>
 
               <label for="duedate">
                 Date
-                <input id="duedate" type="date" value="2022-07-15" />
+                <input id="duedate" type="date" />
               </label>
 
               <label for="priority">
                 Priority
-                <input id="priority" min="1" max="3" type="range" value="2" />
+                <input id="priority" min="1" max="3" type="range" />
               </label>
 
               <label for="project">

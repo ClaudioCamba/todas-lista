@@ -39,7 +39,7 @@ const modalControl = (() => {
     });
 
     formSubmit.addEventListener('click', () => {
-        allProjects.addNewTask(new Task(formTitle.value, formDesc.value, formDate.value, formPriority.value, formProject.value));
+        allProjects.addNewTask(new Task(formTitle.value, formDesc.value, formDate.value, formPriority.value, formProject.value, false));
     })
 
     return { closeModal, openModal };
@@ -121,6 +121,7 @@ const allProjects = (function () {
         div.append(h3, ul);
         mainContent.innerHTML = '';
         mainContent.appendChild(div);
+        allTskBtn.classList.add('active');
     }
 
     // Add retrieved projects and tasks into list array
@@ -171,17 +172,11 @@ const allProjects = (function () {
         }
     };
 
-
     // Sidebar click management
-    sideBar.addEventListener('click', (e) => {
-        if (e.target.classList.contains('allTasks')) {
-            e.target.classList.add('active');
-            showAllTask();
-        } else if (e.target.classList.contains('proj-name')) {
-            allTskBtn.classList.remove('active');
-        }
+    allTskBtn.addEventListener('click', (e) => {
+        e.target.classList.add('active');
+        showAllTask();
     });
-
 
     return { addNewProj, updateApp, addNewTask, checkProjList, showAllTask, saveProjects, getProjects };
 })();

@@ -45,6 +45,7 @@ class Task {
         updateBtn.innerText = 'Update';
         updateBtn.classList.add('update-btn');
         updateBtn.addEventListener('click', () => {
+
             this.title = formTitle.value;
             this.desc = formDesc.value;
             this.dueDate = formDate.value;
@@ -66,7 +67,9 @@ class Task {
                 //     }
                 // }
             }
+            console.log(this.object);
             modalControl.closeModal();
+
             this.parentProj.projectShow();
             allProjects.saveProjects();
         });
@@ -93,7 +96,7 @@ class Task {
         this.check = document.createElement('input');
         this.titleElem.innerText = this.title;
         this.descElem.innerText = this.desc;
-        if (this.dueDate !== '') { this.dueDateElem.innerText = format(new Date(this.dueDate), 'dd/MM/yyyy'); }
+        this.dueDate !== '' ? this.dueDateElem.innerText = format(new Date(this.dueDate), 'dd/MM/yyyy') : this.dueDateElem.innerText = '';
         this.priorityElem.innerText = this.priority;
         this.projectElem.innerText = this.project;
         this.check.type = 'checkbox';
@@ -142,6 +145,7 @@ class Project {
         });
 
         this.projBtn.addEventListener('click', (e) => {
+            allTskBtn.classList.remove('active');
             this.projectShow();
         });
         return this.sbLi;
@@ -196,6 +200,7 @@ class Project {
                         task.projectElem.innerText = this.name;
                     });
                     div.classList.remove('active');
+                    error.innerText = '';
                 } else {
                     error.innerText = `${editInput.value} project already exists`;
                 }
@@ -208,6 +213,7 @@ class Project {
 
         closeEdit.addEventListener('click', (e) => {
             div.classList.remove('active');
+            error.innerText = '';
             editBtn.innerText = 'edit';
         });
 
