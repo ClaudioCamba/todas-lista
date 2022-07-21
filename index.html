@@ -43,13 +43,15 @@
             </div>
             <!-- Task Form -->
             <div class="task-form">
+              <h3 class="create">Create Task</h3>
+              <h3 class="edit">Edit Task</h3>
               <label for="title">
-                Title
+                Title:
                 <input id="title" type="text" placeholder="Enter Task Title" />
               </label>
 
               <label for="desc">
-                Description
+                Description:
                 <input
                   id="desc"
                   type="text"
@@ -58,21 +60,21 @@
               </label>
 
               <label for="duedate">
-                Date
+                Date:
                 <input id="duedate" type="date" />
               </label>
 
               <label for="priority">
-                Priority
+                Priority:
                 <input id="priority" min="1" max="3" type="range" />
               </label>
 
               <label for="project">
-                Project
+                Project:
                 <select name="Projects" id="project"></select>
               </label>
 
-              <input id="formSubmit" type="button" value="add" />
+              <input id="formSubmit" type="button" value="+" />
               <p class="task-error"></p>
             </div>
           </div>
