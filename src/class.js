@@ -190,19 +190,24 @@ class Project {
         editBtn.addEventListener('click', (e) => {
             if (div.classList.contains('active')) {
                 if (allProjects.checkProjList(editInput.value.toLowerCase())) {
-                    this.name = editInput.value.toLowerCase();
-                    this.projHeader.innerText = this.name;
-                    this.projBtn.innerText = this.name;
-                    this.option.innerText = this.name;
-                    editBtn.innerText = 'edit';
-                    this.tasks.forEach(task => {
-                        task.project = this.name;
-                        task.projectElem.innerText = this.name;
-                    });
-                    div.classList.remove('active');
-                    error.innerText = '';
+                    if (editInput.value !== '') {
+                        this.name = editInput.value.toLowerCase();
+                        this.projHeader.innerText = this.name;
+                        this.projBtn.innerText = this.name;
+                        this.option.innerText = this.name;
+                        editBtn.innerText = 'edit';
+                        this.tasks.forEach(task => {
+                            task.project = this.name;
+                            task.projectElem.innerText = this.name;
+                        });
+                        div.classList.remove('active');
+                        error.innerText = '';
+                    } else {
+                        error.innerText = `*Empty input cannot be submitted`;
+                    }
+
                 } else {
-                    error.innerText = `${editInput.value} project already exists`;
+                    error.innerText = `*${editInput.value} project already exists`;
                 }
             } else {
                 editBtn.innerText = 'update';
