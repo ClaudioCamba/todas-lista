@@ -11,12 +11,6 @@ import { Task, Project } from './class.js';
 // Store projects
 import { storeProjects } from './storage';
 
-// Reset for testing Testing
-// localStorage.clear()
-// localStorage.setItem(
-//     "todasLista", "[{\"name\":\"inbox\",\"tasks\":[{\"done\":true,\"title\":\"Call Mum\",\"desc\":\"This is my description example\",\"date\":\"2022-07-21\",\"priority\":\"3\",\"project\":\"inbox\"}]},{\"name\":\"shopping\",\"tasks\":[{\"done\":false,\"title\":\"Pizza\",\"desc\":\"This is my description example\",\"date\":\"2022-07-18\",\"priority\":\"2\",\"project\":\"shopping\"},{\"done\":false,\"title\":\"Wine\",\"desc\":\"This is my description example\",\"date\":\"2022-07-18\",\"priority\":\"1\",\"project\":\"shopping\"}]}]"
-// );
-
 // Modal control ====================================
 const modalControl = (() => {
     // When the user clicks the button, open the modal 
@@ -31,6 +25,8 @@ const modalControl = (() => {
     const closeModal = () => {
         if (modal.classList.contains('task-edit-show')) { document.querySelector('.update-btn').remove(); }
         modal.className = 'modal';
+        taskError.innerText = '';
+        projError.innerText = '';
     }
 
     // Click event handlers for Project/ Task modal

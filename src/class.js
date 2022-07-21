@@ -31,8 +31,6 @@ class Task {
         this.delete = document.createElement('button');
         this.delete.innerText = 'X';
         this.delete.addEventListener('click', (e) => {
-            // this.li.remove();
-            // console.log(this.parentProj);
             this.parentProj.tasks.splice(this.parentProj.tasks.indexOf(this.object), 1);
             this.parentProj.projectShow();
             allProjects.saveProjects();
@@ -42,7 +40,7 @@ class Task {
 
     updateEdit() {
         const updateBtn = document.createElement('button');
-        updateBtn.innerText = 'Update';
+        updateBtn.innerText = '+';
         updateBtn.classList.add('update-btn');
         updateBtn.addEventListener('click', () => {
 
@@ -54,18 +52,6 @@ class Task {
             if (this.project !== this.parentProj.name) {
                 allProjects.addNewTask(new Task(formTitle.value, formDesc.value, formDate.value, formPriority.value, formProject.value, this.done));
                 this.parentProj.tasks.splice(this.parentProj.tasks.indexOf(this.object), 1);
-                // if (this.done === true) {
-                //     for (const proj of this.parentProj.allProj) {
-                //         if (proj.name === this.project) {
-                //             console.log(proj);
-                //             for (const task of proj.tasks) {
-                //                 if (task.title === this.title) {
-                //                     task.done = true;
-                //                 }
-                //             }
-                //         }
-                //     }
-                // }
             }
             console.log(this.object);
             modalControl.closeModal();
@@ -134,8 +120,6 @@ class Project {
         this.projBtn.classList.add('proj-name');
         this.closeBtn.innerText = 'X';
         this.name === 'inbox' ? this.sbLi.append(this.projBtn) : this.sbLi.append(this.projBtn, this.closeBtn)
-        // this.sbLi.append(this.projBtn, this.closeBtn);
-        // Remove project 
         this.closeBtn.addEventListener('click', (e) => {
             this.sbLi.remove(); // Remove DOM element
             this.option.remove(); // Remove task creation option
